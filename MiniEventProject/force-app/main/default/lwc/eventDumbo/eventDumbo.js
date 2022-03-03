@@ -23,22 +23,21 @@ export default class EventDumbo extends LightningElement {
 
     handleSubscribe(){
         const messageCallback = (response) => {
-            console.log('New message received: ', JSON.stringify(response));
-            this.contactMessage = JSON.stringify(response.data.payload.Updated_Contact__c);
+            this.contactMessage = response.data.payload.Updated_Contact__c;
         };
 
-        subscribe(this.channelName, -1, messageCallback).then((response) => {
-            console.log(
-                "Subscription request sent to: ",
-                JSON.stringify(response.channel)
-            );
+        subscribe(this.channelName, 
+                  -1, 
+                  messageCallback)
+        .then((response) => {
             this.subscription = response;
         });
     }
 
     registerErrorListener(){
         onError((error) => {
-            console.log("Received error from server: ", JSON.stringify(error));
+            console.log("Received error from server: ", 
+                        JSON.stringify(error));
         });
     }
 }
